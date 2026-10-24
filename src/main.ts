@@ -11,6 +11,21 @@ let selectedImageFolder = "";
 const dropZone = document.getElementById("drop-zone");
 const dropStatus = document.getElementById("drop-status");
 
+const themeToggle = document.getElementById("theme-toggle");
+const currentTheme = localStorage.getItem("theme");
+
+if (currentTheme === "dark") {
+    document.body.classList.add("dark-theme");
+}
+
+themeToggle?.addEventListener("click", () => {
+    document.body.classList.toggle("dark-theme");
+    const theme = document.body.classList.contains("dark-theme")
+        ? "dark"
+        : "light";
+    localStorage.setItem("theme", theme);
+});
+
 async function greet() {
     if (greetMsgEl && greetInputEl) {
         // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/

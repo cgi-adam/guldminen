@@ -1,11 +1,15 @@
 import { invoke } from "@tauri-apps/api/core";
 import { open, save } from "@tauri-apps/plugin-dialog";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 
 let greetInputEl: HTMLInputElement | null;
 let greetMsgEl: HTMLElement | null;
 
 let selectedExcelPath = "";
 let selectedImageFolder = "";
+
+const dropZone = document.getElementById("drop-zone");
+const dropStatus = document.getElementById("drop-status");
 
 async function greet() {
     if (greetMsgEl && greetInputEl) {
@@ -23,6 +27,41 @@ window.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         greet();
     });
+});
+
+getCurrentWindow().onDragDropEvent((event) => {
+    if (!dropZone || !dropStatus) return;
+
+    if (event.payload.type === "over" || event.payload.type === "enter") {
+        dropZone.classList.add("hover");
+    } else if (event.payload.type === "leave") {
+        dropZone.classList.remove("hover");
+    } else if (event.payload.type === "drop") {
+        dropZone.classList.remove("hover");
+
+        // Loop through all dropped items
+        for (const path of event.payload.paths) {
+            // Check if it's an Excel file based on extension
+            if (
+                path.toLowerCase().endsWith(".xlsx") ||
+                path.toLowerCase().endsWith(".xls")
+            ) {
+                selectedExcelPath = path;
+                console.log("Excel dropped:", path);
+            } else {
+                // If it's not Excel, we assume it's the image folder
+                selectedImageFolder = path;
+                console.log("Folder dropped:", path);
+            }
+        }
+
+        // Update UI Text
+        let status = [];
+        if (selectedExcelPath) status.push("Excel indlæst");
+        if (selectedImageFolder) status.push("Mappe indlæst");
+        dropStatus.textContent =
+            status.length > 0 ? status.join(" | ") : "Klar...";
+    }
 });
 
 document
@@ -53,7 +92,7 @@ document
 
 document.getElementById("generate-btn")?.addEventListener("click", async () => {
     if (!selectedImageFolder || !selectedExcelPath) {
-        alert("Please select both a folder and an Excel file first.");
+        alert("Venligst vælg både en mappe og en Excel fil.");
         return;
     }
 

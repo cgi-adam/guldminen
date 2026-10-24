@@ -103,6 +103,39 @@ button {
     margin-right: 5px;
 }
 
+.drop-zone {
+    border: 2px dashed;
+    border-radius: 12px;
+    border-color: #ffffff;
+    background-color: #3c4249;
+    padding: 40px 20px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 350px;
+    height: auto;
+    transition: all 0.2s ease-in-out;
+    cursor: default;
+}
+
+.drop-zone p {
+    margin: 5px 0;
+    pointer-events: none;
+}
+
+.drop-status {
+    font-size: 0.9em;
+    color: #646cff;
+    font-weight: 500;
+}
+
+.drop-zone.hover {
+    border-color: #646cff;
+    background-color: #e0e6ff;
+    transform: scale(1.02);
+    max-width: 400px;
+    height: 100px;
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         color: #f6f6f6;
@@ -124,5 +157,16 @@ button {
     }
     button:active {
         background-color: #0f0f0f69;
+    }
+
+    .drop-zone {
+        border-color: #828997;
+    }
+    .drop-zone.hover {
+        border-color: #24c8db;
+        background-color: #1a2a3a;
+    }
+    .drop-status {
+        color: #24c8db;
     }
 }

@@ -34,6 +34,11 @@
     text-align: center;
 }
 
+#main-header {
+    color: #111f38;
+    font-size: 50px;
+}
+
 .logo {
     height: 6em;
     padding: 1.5em;
@@ -98,7 +103,11 @@ button {
 @media (prefers-color-scheme: dark) {
     :root {
         color: #f6f6f6;
-        background-color: #2f2f2f;
+        background-color: #1f1f1f;
+    }
+
+    #main-header {
+        color: #c0d6ee;
     }
 
     a:hover {

@@ -1,8 +1,11 @@
 import { invoke } from "@tauri-apps/api/core";
-import { open } from "@tauri-apps/plugin-dialog";
+import { open, save } from "@tauri-apps/plugin-dialog";
 
 let greetInputEl: HTMLInputElement | null;
 let greetMsgEl: HTMLElement | null;
+
+let selectedExcelPath = "";
+let selectedImageFolder = "";
 
 async function greet() {
     if (greetMsgEl && greetInputEl) {
@@ -22,7 +25,19 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// Example: Opening a folder picker for the images
+document
+    .getElementById("upload-excel-btn")
+    ?.addEventListener("click", async () => {
+        const selectedPath = await open({
+            multiple: false,
+            filters: [{ name: "Excel", extensions: ["xlsx"] }],
+        });
+        if (selectedPath) {
+            selectedExcelPath = selectedPath as string;
+            console.log("Excel selected:", selectedExcelPath);
+        }
+    });
+
 document
     .getElementById("upload-images-btn")
     ?.addEventListener("click", async () => {
@@ -30,28 +45,37 @@ document
             directory: true,
             multiple: false,
         });
-
         if (selectedFolder) {
-            console.log("Selected image folder:", selectedFolder);
+            selectedImageFolder = selectedFolder as string;
+            console.log("Images selected:", selectedImageFolder);
         }
     });
 
-// Example: Opening a file explorer for the Excel file
-document
-    .getElementById("upload-excel-btn")
-    ?.addEventListener("click", async () => {
-        const selectedPath = await open({
-            multiple: false,
-            filters: [
-                {
-                    name: "Excel",
-                    extensions: ["xlsx"],
-                },
-            ],
+document.getElementById("generate-btn")?.addEventListener("click", async () => {
+    if (!selectedImageFolder || !selectedExcelPath) {
+        alert("Please select both a folder and an Excel file first.");
+        return;
+    }
+
+    try {
+        // Here we open the native save dialog
+        const savePath = await save({
+            filters: [{ name: "Excel", extensions: ["xlsx"] }],
+            defaultPath: "angiv navn.xlsx",
         });
 
-        if (selectedPath) {
-            console.log("Selected Excel file:", selectedPath);
-            // Later, you will pass this path to your Rust backend using invoke()
-        }
-    });
+        // If the user closes the dialog without saving, stop execution
+        if (!savePath) return;
+
+        // Send all three paths to the Rust backend
+        const response = await invoke("generate_report", {
+            imagePath: selectedImageFolder,
+            excelPath: selectedExcelPath,
+            savePath: savePath,
+        });
+
+        alert(response);
+    } catch (error) {
+        alert("Error: " + error);
+    }
+});

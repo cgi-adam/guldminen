@@ -2,47 +2,54 @@
     1. Base Variables & Theming
 ---------------------- */
 :root {
-    /* Light Theme */
     --bg-gradient: linear-gradient(135deg, #ffffff 0%, #d4e4f7 100%);
     --text-main: #111f38;
     --text-muted: #50555c;
     --nav-hover: rgba(0, 0, 0, 0.05);
 
-    --dropzone-bg: #aebfd1;
-    --dropzone-border: #ffffff;
-    --dropzone-text: #333333;
-    --dropzone-hover-bg: #e0e6ff90;
-    --dropzone-hover-border: #446dff60;
+    --dropzone-bg: rgba(17, 31, 56, 0.03);
+    --dropzone-border: rgba(17, 31, 56, 0.15);
+    --dropzone-text: rgba(17, 31, 56, 0.6);
+    --dropzone-hover-bg: rgba(68, 109, 255, 0.08);
+    --dropzone-hover-border: rgba(68, 109, 255, 0.5);
 
     --btn-bg: #afc0d560;
     --btn-disabled-bg: #afc0d560;
     --btn-disabled-text: #9ca3af;
 
     --status-badge-bg: #525860;
-    --status-ready: #4caf50;
     --status-not-ready: #d84b4b;
     --icon-color: #111f38;
+
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+    --icon-hover-bg: #f1f5f9;
+    --modal-overlay: rgba(17, 31, 56, 0.5);
 }
 
 body.dark-theme {
-    /* Dark Theme Overrides */
     --bg-gradient: linear-gradient(135deg, #1f2329 0%, #17191c 100%);
     --text-main: #f6f6f6;
     --text-muted: #e2e8f0;
     --nav-hover: rgba(255, 255, 255, 0.05);
 
-    --dropzone-bg: #94a3b8;
-    --dropzone-border: #475569;
-    --dropzone-text: #f8fafc;
-    --dropzone-hover-bg: #1a2a3a;
-    --dropzone-hover-border: #24c8db;
+    --dropzone-bg: rgba(30, 41, 59, 0.4);
+    --dropzone-border: rgba(148, 163, 184, 0.25);
+    --dropzone-text: #94a3b8;
+    --dropzone-hover-bg: rgba(30, 41, 59, 0.8);
+    --dropzone-hover-border: #38bdf8;
 
-    --btn-bg: #374151; /* Default active bg could be adjusted */
+    --btn-bg: #374151;
     --btn-disabled-bg: #374151;
     --btn-disabled-text: #6b7280;
 
     --status-not-ready: #e57373;
     --icon-color: #dbcc50;
+
+    --card-bg: #1e293b;
+    --card-border: #334155;
+    --icon-hover-bg: #334155;
+    --modal-overlay: rgba(0, 0, 0, 0.7);
 }
 
 /* ----------------------
@@ -79,16 +86,6 @@ button {
     color: var(--text-main);
 }
 
-a {
-    font-weight: 500;
-    color: #646cff;
-    text-decoration: inherit;
-}
-
-a:hover {
-    color: #535bf2;
-}
-
 /* ----------------------
     3. Layout and Containers
 ---------------------- */
@@ -102,14 +99,6 @@ a:hover {
     max-width: 100%;
 }
 
-.row {
-    display: flex;
-    justify-content: center;
-}
-
-/* ----------------------
-    4. Navigation
----------------------- */
 .top-nav {
     display: flex;
     justify-content: flex-end;
@@ -151,124 +140,24 @@ a:hover {
         fill 0.3s ease;
 }
 
-/* ----------------------
-    5. Header
----------------------- */
 #main-header {
     color: var(--text-main);
     font-size: 50px;
     width: 100%;
     align-self: flex-start;
     padding-left: 7%;
-    margin-bottom: 100px;
+    margin-bottom: 90px;
     text-align: left;
 }
 
 /* ----------------------
-    6. Status Indicators
----------------------- */
-.status-row {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin-bottom: 30px;
-}
-
-.status-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-}
-
-.status-badge {
-    display: flex;
-    justify-content: center;
-    background-color: var(--status-badge-bg);
-    color: white;
-    padding: 6px 24px;
-    width: 80px;
-    border-radius: 20px;
-    font-weight: 500;
-    font-size: 0.9em;
-}
-
-.status-text {
-    font-size: 0.85em;
-    font-weight: 500;
-}
-
-.status-text.not-ready {
-    color: var(--status-not-ready);
-}
-
-.status-text.ready {
-    color: var(--status-ready);
-}
-
-/* ----------------------
-    7. Dropzone
----------------------- */
-.drop-zone {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px dashed var(--dropzone-border);
-    border-radius: 20px;
-    background-color: var(--dropzone-bg);
-    color: var(--dropzone-text);
-    padding: 40px 20px;
-    margin-top: 25px;
-    margin-bottom: 60px;
-    width: 80%;
-    max-width: 360px;
-    height: 125px;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    cursor: pointer;
-}
-
-.drop-zone p {
-    margin: 5px 0;
-    font-size: 18px;
-    text-align: center;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-.drop-text-default {
-    opacity: 1;
-}
-
-.drop-text-hover {
-    display: none;
-    opacity: 0.6;
-    font-size: 1.2em;
-    letter-spacing: 0.5px;
-}
-
-.drop-zone.hover {
-    transform: scale(1.1);
-    border-color: var(--dropzone-hover-border);
-    background-color: var(--dropzone-hover-bg);
-}
-
-.drop-zone.hover .drop-text-default {
-    display: none;
-}
-
-.drop-zone.hover .drop-text-hover {
-    display: block;
-    opacity: 0.7;
-}
-
-/* ----------------------
-    8. Generate Zone
+    4. Generate Zone
 ---------------------- */
 #generate-zone {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 50px;
 }
 
 #generate-btn {
@@ -287,12 +176,220 @@ a:hover {
 .generate-btn:disabled {
     background-color: var(--btn-disabled-bg);
     color: var(--btn-disabled-text);
-    cursor: not-allowed;
-    box-shadow: none;
+    cursor: default !important;
+    opacity: 0.5;
 }
 
 .missing-text {
     color: var(--status-not-ready);
     font-size: 0.85em;
     margin-top: 12px;
+}
+
+/* ----------------------
+    5. Dropzone & File List
+---------------------- */
+.app-core {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.drop-zone {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px dashed var(--dropzone-border);
+    border-radius: 20px;
+    background-color: var(--dropzone-bg);
+    color: var(--dropzone-text);
+    padding: 40px 20px;
+    margin-bottom: 50px;
+    width: 80%;
+    max-width: 360px;
+    height: 125px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.drop-zone p {
+    margin: 5px 0;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.drop-text-default {
+    opacity: 1;
+}
+.drop-text-hover {
+    display: none;
+    opacity: 0.6;
+    font-size: 1.2em;
+}
+
+.drop-zone.hover {
+    transform: scale(1.1);
+    border-color: var(--dropzone-hover-border);
+    background-color: var(--dropzone-hover-bg);
+}
+
+.drop-zone.hover .drop-text-default {
+    display: none;
+}
+.drop-zone.hover .drop-text-hover {
+    display: block;
+    opacity: 0.7;
+}
+
+.file-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.file-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card-bg);
+    border: none;
+    padding: 6px 16px 6px 6px;
+    border-radius: 50px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.file-card.hidden {
+    display: none;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow: hidden;
+}
+
+.file-path {
+    font-size: 0.85em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    opacity: 0.8;
+}
+
+.file-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.status-badge {
+    display: flex;
+    justify-content: center;
+    background-color: var(--status-badge-bg);
+    color: white;
+    padding: 4px 16px;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 0.8em;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    border-radius: 50px;
+    padding: 6px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: var(--text-main);
+}
+
+.icon-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+.icon-btn:hover {
+    background: var(--icon-hover-bg);
+}
+.delete-btn:hover {
+    color: var(--status-not-ready);
+}
+
+/* ----------------------
+    6. Modal Styles
+---------------------- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--modal-overlay);
+    backdrop-filter: blur(3px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.2s;
+}
+
+.modal-overlay.hidden {
+    display: none;
+    opacity: 0;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 24px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.2em;
+    color: var(--text-main);
+}
+
+.modal-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    font-size: 0.9em;
+    color: var(--text-muted);
+}
+
+.modal-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.modal-list li:last-child {
+    border-bottom: none;
 }

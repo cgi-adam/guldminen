@@ -24,7 +24,6 @@
                 </svg>
                 <span id="lang-text">Dansk</span>
             </button>
-
             <button id="theme-toggle" class="nav-btn">
                 <svg
                     id="moon-icon"
@@ -69,29 +68,9 @@
         <main class="container">
             <h1 id="main-header">God eftermiddag,</h1>
 
-            <div class="status-row">
-                <div class="status-item">
-                    <div class="status-badge">Billeder</div>
-                    <div id="status-img-text" class="status-text not-ready">
-                        Ikke klar
-                    </div>
-                </div>
-                <div class="status-item">
-                    <div class="status-badge">Excel-fil</div>
-                    <div id="status-excel-text" class="status-text not-ready">
-                        Ikke klar
-                    </div>
-                </div>
-            </div>
-
-            <div id="drop-zone" class="drop-zone">
-                <p class="drop-text-default">
-                    Træk og slip en mappe med<br />
-                    billeder og en Excel-fil her
-                </p>
-                <p class="drop-text-hover">Slip her</p>
-            </div>
-
+            <p id="missing-text" class="missing-text">
+                * Billeder og Excel-fil mangler at blive lagt ind
+            </p>
             <div id="generate-zone">
                 <button
                     id="generate-btn"
@@ -100,24 +79,105 @@
                 >
                     Opret et nyt regneark
                 </button>
-                <p id="missing-text" class="missing-text">
-                    * Billeder og Excel-fil mangler at blive lagt ind
-                </p>
             </div>
 
-            <!--
-            <div class="row">
+            <div class="app-core">
+                <div id="drop-zone" class="drop-zone">
+                    <p class="drop-text-default">
+                        Træk og slip en mappe med<br />
+                        billeder og en Excel-fil her
+                    </p>
+                    <p class="drop-text-hover">Slip her</p>
+                </div>
 
-                <a href="https://tauri.app" target="_blank">
-                    <img
-                        src="/src/assets/tauri.svg"
-                        class="logo tauri"
-                        alt="Tauri logo"
-                    />
-                </a>
+                <div id="file-list" class="file-list">
+                    <div id="card-img" class="file-card hidden">
+                        <div class="file-info">
+                            <span class="status-badge">Billeder</span>
+                            <span id="path-img" class="file-path"></span>
+                        </div>
+                        <div class="file-actions">
+                            <button
+                                id="btn-inspect-img"
+                                class="icon-btn"
+                                title="Vis mappe"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 640 640"
+                                >
+                                    <path
+                                        d="M320 96C239.2 96 174.5 132.8 127.4 176.6C80.6 220.1 49.3 272 34.4 307.7C31.1 315.6 31.1 324.4 34.4 332.3C49.3 368 80.6 420 127.4 463.4C174.5 507.1 239.2 544 320 544C400.8 544 465.5 507.2 512.6 463.4C559.4 419.9 590.7 368 605.6 332.3C608.9 324.4 608.9 315.6 605.6 307.7C590.7 272 559.4 220 512.6 176.6C465.5 132.9 400.8 96 320 96zM176 320C176 240.5 240.5 176 320 176C399.5 176 464 240.5 464 320C464 399.5 399.5 464 320 464C240.5 464 176 399.5 176 320zM320 256C320 291.3 291.3 320 256 320C244.5 320 233.7 317 224.3 311.6C223.3 322.5 224.2 333.7 227.2 344.8C240.9 396 293.6 426.4 344.8 412.7C396 399 426.4 346.3 412.7 295.1C400.5 249.4 357.2 220.3 311.6 224.3C316.9 233.6 320 244.4 320 256z"
+                                    />
+                                </svg>
+                            </button>
+                            <button
+                                id="btn-delete-img"
+                                class="icon-btn delete-btn"
+                                title="Fjern"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 640 640"
+                                >
+                                    <path
+                                        d="M232.7 69.9L224 96L128 96C110.3 96 96 110.3 96 128C96 145.7 110.3 160 128 160L512 160C529.7 160 544 145.7 544 128C544 110.3 529.7 96 512 96L416 96L407.3 69.9C402.9 56.8 390.7 48 376.9 48L263.1 48C249.3 48 237.1 56.8 232.7 69.9zM512 208L128 208L149.1 531.1C150.7 556.4 171.7 576 197 576L443 576C468.3 576 489.3 556.4 490.9 531.1L512 208z"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
 
+                    <div id="card-excel" class="file-card hidden">
+                        <div class="file-info">
+                            <span class="status-badge">Excel-fil</span>
+                            <span id="path-excel" class="file-path"></span>
+                        </div>
+                        <div class="file-actions">
+                            <button
+                                id="btn-inspect-excel"
+                                class="icon-btn"
+                                title="Åbn fil"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 640 640"
+                                >
+                                    <path
+                                        d="M320 96C239.2 96 174.5 132.8 127.4 176.6C80.6 220.1 49.3 272 34.4 307.7C31.1 315.6 31.1 324.4 34.4 332.3C49.3 368 80.6 420 127.4 463.4C174.5 507.1 239.2 544 320 544C400.8 544 465.5 507.2 512.6 463.4C559.4 419.9 590.7 368 605.6 332.3C608.9 324.4 608.9 315.6 605.6 307.7C590.7 272 559.4 220 512.6 176.6C465.5 132.9 400.8 96 320 96zM176 320C176 240.5 240.5 176 320 176C399.5 176 464 240.5 464 320C464 399.5 399.5 464 320 464C240.5 464 176 399.5 176 320zM320 256C320 291.3 291.3 320 256 320C244.5 320 233.7 317 224.3 311.6C223.3 322.5 224.2 333.7 227.2 344.8C240.9 396 293.6 426.4 344.8 412.7C396 399 426.4 346.3 412.7 295.1C400.5 249.4 357.2 220.3 311.6 224.3C316.9 233.6 320 244.4 320 256z"
+                                    />
+                                </svg>
+                            </button>
+                            <button
+                                id="btn-delete-excel"
+                                class="icon-btn delete-btn"
+                                title="Fjern"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 640 640"
+                                >
+                                    <path
+                                        d="M232.7 69.9L224 96L128 96C110.3 96 96 110.3 96 128C96 145.7 110.3 160 128 160L512 160C529.7 160 544 145.7 544 128C544 110.3 529.7 96 512 96L416 96L407.3 69.9C402.9 56.8 390.7 48 376.9 48L263.1 48C249.3 48 237.1 56.8 232.7 69.9zM512 208L128 208L149.1 531.1C150.7 556.4 171.7 576 197 576L443 576C468.3 576 489.3 556.4 490.9 531.1L512 208z"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            -->
         </main>
+
+        <div id="inspect-modal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-title">Filindhold</h2>
+                    <button id="btn-close-modal" class="icon-btn delete-btn">
+                        ✖
+                    </button>
+                </div>
+                <ul id="modal-file-list" class="modal-list"></ul>
+            </div>
+        </div>
     </body>
 </html>

@@ -1,16 +1,58 @@
-.logo.tauri:hover {
-    filter: drop-shadow(0 0 2em #24c8db);
+/* ----------------------
+    1. Base Variables & Theming
+---------------------- */
+:root {
+    /* Light Theme */
+    --bg-gradient: linear-gradient(135deg, #ffffff 0%, #d4e4f7 100%);
+    --text-main: #111f38;
+    --text-muted: #50555c;
+    --nav-hover: rgba(0, 0, 0, 0.05);
+
+    --dropzone-bg: #aebfd1;
+    --dropzone-border: #ffffff;
+    --dropzone-text: #333333;
+    --dropzone-hover-bg: #e0e6ff90;
+    --dropzone-hover-border: #446dff60;
+
+    --btn-bg: #afc0d560;
+    --btn-disabled-bg: #afc0d560;
+    --btn-disabled-text: #9ca3af;
+
+    --status-badge-bg: #525860;
+    --status-ready: #4caf50;
+    --status-not-ready: #d84b4b;
+    --icon-color: #111f38;
 }
 
-:root {
+body.dark-theme {
+    /* Dark Theme Overrides */
+    --bg-gradient: linear-gradient(135deg, #1f2329 0%, #17191c 100%);
+    --text-main: #f6f6f6;
+    --text-muted: #e2e8f0;
+    --nav-hover: rgba(255, 255, 255, 0.05);
+
+    --dropzone-bg: #94a3b8;
+    --dropzone-border: #475569;
+    --dropzone-text: #f8fafc;
+    --dropzone-hover-bg: #1a2a3a;
+    --dropzone-hover-border: #24c8db;
+
+    --btn-bg: #374151; /* Default active bg could be adjusted */
+    --btn-disabled-bg: #374151;
+    --btn-disabled-text: #6b7280;
+
+    --status-not-ready: #e57373;
+    --icon-color: #dbcc50;
+}
+
+/* ----------------------
+    2. Global Styles
+---------------------- */
+html {
     font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
-
-    color: #111f38;
-    background: linear-gradient(135deg, #ffffff 0%, #d4e4f7 100%);
-
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -19,9 +61,55 @@
 
 body {
     margin: 0;
-    min-height: 100vh; /* this fixes the gradient so it covers the full DOM */
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: var(--text-main);
+    background: var(--bg-gradient);
+    transition:
+        background 0.3s ease,
+        color 0.3s ease;
 }
 
+button {
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+    color: var(--text-main);
+}
+
+a {
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: inherit;
+}
+
+a:hover {
+    color: #535bf2;
+}
+
+/* ----------------------
+    3. Layout and Containers
+---------------------- */
+.container {
+    margin: 0 auto;
+    padding-top: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+/* ----------------------
+    4. Navigation
+---------------------- */
 .top-nav {
     display: flex;
     justify-content: flex-end;
@@ -42,137 +130,43 @@ body {
     background: transparent;
     border: none;
     box-shadow: none;
-    color: #111f38;
     font-size: 0.95em;
     padding: 8px 12px;
     cursor: pointer;
+    color: var(--text-main);
+    border-radius: 4px;
+    transition: background-color 0.2s;
 }
 
 .nav-btn:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-    border-color: transparent;
+    background-color: var(--nav-hover);
 }
 
-.container {
-    margin: 0 auto;
-    padding-top: 10vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-width: 100%;
+#moon-icon,
+#sun-icon {
+    color: var(--icon-color);
+    fill: var(--icon-color);
+    transition:
+        color 0.3s ease,
+        fill 0.3s ease;
 }
 
+/* ----------------------
+    5. Header
+---------------------- */
 #main-header {
-    color: #111f38;
+    color: var(--text-main);
     font-size: 50px;
     width: 100%;
     align-self: flex-start;
-    padding-left: 7%; /* should put the text more towards the left but not enough */
-    margin-bottom: 120px;
+    padding-left: 7%;
+    margin-bottom: 100px;
     text-align: left;
 }
 
-.logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: 0.75s;
-}
-
-.row {
-    display: flex;
-    justify-content: center;
-}
-
-a {
-    font-weight: 500;
-    color: #646cff;
-    text-decoration: inherit;
-}
-
-a:hover {
-    color: #535bf2;
-}
-
-h1 {
-    text-align: center;
-}
-
-input,
-button {
-    border-radius: 8px;
-    border: 1px solid transparent;
-    padding: 0.6em 1.2em;
-    font-size: 1em;
-    font-weight: 500;
-    font-family: inherit;
-    color: #0f0f0f;
-    background-color: #ffffff;
-    transition: border-color 0.25s;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-}
-
-button {
-    cursor: pointer;
-}
-
-button:hover {
-    border-color: #396cd8;
-}
-button:active {
-    border-color: #396cd8;
-    background-color: #e8e8e8;
-}
-
-input,
-button {
-    outline: none;
-}
-
-.drop-zone {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px dashed #ffffff;
-    border-radius: 12px;
-    background-color: #aebfd1;
-    color: #334155;
-    padding: 40px 20px;
-    margin-top: 40px;
-    margin-bottom: 80px;
-    width: 80%;
-    max-width: 350px;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Creates a smooth, spring-like expansion */
-    cursor: pointer;
-}
-
-.drop-zone p {
-    margin: 5px 0;
-    pointer-events: none;
-}
-
-.drop-text-hover {
-    display: none;
-    opacity: 0.6;
-    font-size: 1.2em;
-    letter-spacing: 0.5px;
-}
-
-.drop-zone.hover {
-    transform: scale(1.06); /* Satisfying pop on hover */
-    border-color: #646cff;
-    background-color: #e0e6ff;
-}
-
-.drop-zone.hover .drop-text-default {
-    display: none;
-}
-
-.drop-zone.hover .drop-text-hover {
-    display: block;
-}
-
+/* ----------------------
+    6. Status Indicators
+---------------------- */
 .status-row {
     display: flex;
     justify-content: center;
@@ -188,9 +182,12 @@ button {
 }
 
 .status-badge {
-    background-color: #64748b;
+    display: flex;
+    justify-content: center;
+    background-color: var(--status-badge-bg);
     color: white;
     padding: 6px 24px;
+    width: 80px;
     border-radius: 20px;
     font-weight: 500;
     font-size: 0.9em;
@@ -202,13 +199,72 @@ button {
 }
 
 .status-text.not-ready {
-    color: #d84b4b;
+    color: var(--status-not-ready);
 }
 
 .status-text.ready {
-    color: #4caf50;
+    color: var(--status-ready);
 }
 
+/* ----------------------
+    7. Dropzone
+---------------------- */
+.drop-zone {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px dashed var(--dropzone-border);
+    border-radius: 20px;
+    background-color: var(--dropzone-bg);
+    color: var(--dropzone-text);
+    padding: 40px 20px;
+    margin-top: 25px;
+    margin-bottom: 60px;
+    width: 80%;
+    max-width: 360px;
+    height: 125px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+}
+
+.drop-zone p {
+    margin: 5px 0;
+    font-size: 18px;
+    text-align: center;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.drop-text-default {
+    opacity: 1;
+}
+
+.drop-text-hover {
+    display: none;
+    opacity: 0.6;
+    font-size: 1.2em;
+    letter-spacing: 0.5px;
+}
+
+.drop-zone.hover {
+    transform: scale(1.1);
+    border-color: var(--dropzone-hover-border);
+    background-color: var(--dropzone-hover-bg);
+}
+
+.drop-zone.hover .drop-text-default {
+    display: none;
+}
+
+.drop-zone.hover .drop-text-hover {
+    display: block;
+    opacity: 0.7;
+}
+
+/* ----------------------
+    8. Generate Zone
+---------------------- */
 #generate-zone {
     display: flex;
     flex-direction: column;
@@ -216,76 +272,27 @@ button {
 }
 
 #generate-btn {
-    background-color: #afc0d560;
-    color: #50555c;
+    background-color: var(--btn-bg);
+    color: var(--text-main);
     width: 250px;
     height: 40px;
     border-radius: 20px;
+    border-color: transparent;
+    cursor: pointer;
+    transition:
+        background-color 0.2s,
+        color 0.2s;
 }
 
 .generate-btn:disabled {
-    background-color: #d1d5db;
-    color: #9ca3af;
-    border-color: transparent;
+    background-color: var(--btn-disabled-bg);
+    color: var(--btn-disabled-text);
     cursor: not-allowed;
     box-shadow: none;
 }
 
 .missing-text {
-    color: #d84b4b;
+    color: var(--status-not-ready);
     font-size: 0.85em;
     margin-top: 12px;
-}
-
-body.dark-theme .generate-btn:disabled {
-    background-color: #374151;
-    color: #6b7280;
-}
-
-body.dark-theme {
-    color: #f6f6f6;
-    background: linear-gradient(135deg, #1f2329 0%, #17191c 100%);
-}
-
-body.dark-theme #main-header,
-body.dark-theme .nav-btn {
-    color: #e2e8f0;
-}
-
-body.dark-theme .nav-btn:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-body.dark-theme a:hover {
-    color: #24c8db;
-}
-
-body.dark-theme input,
-body.dark-theme button {
-    color: #ffffff;
-}
-
-body.dark-theme button:active {
-    background-color: #0f0f0f69;
-}
-
-body.dark-theme .drop-zone {
-    background-color: #94a3b8;
-    border-color: #475569;
-    color: #f8fafc;
-}
-
-body.dark-theme .drop-zone.hover {
-    border-color: #24c8db;
-    background-color: #1a2a3a;
-}
-
-body.dark-theme #moon-icon,
-body.dark-theme #sun-icon {
-    color: #dbcc50;
-    fill: #dbcc50;
-}
-
-body.dark-theme .status-text.not-ready {
-    color: #e57373;
 }

@@ -31,6 +31,7 @@
                 </svg>
                 <span id="lang-text">Dansk</span>
             </button>
+
             <button id="theme-toggle" class="nav-btn">
                 <svg
                     id="moon-icon"
@@ -38,7 +39,7 @@
                     width="20"
                     height="20"
                     viewBox="0 0 24 24"
-                    fill="none"
+                    fill="currentColor"
                     stroke="currentColor"
                     stroke-width="2"
                     stroke-linecap="round"
@@ -53,7 +54,7 @@
                     width="20"
                     height="20"
                     viewBox="0 0 24 24"
-                    fill="none"
+                    fill="currentColor"
                     stroke="currentColor"
                     stroke-width="2"
                     stroke-linecap="round"
@@ -91,19 +92,24 @@
             </div>
 
             <div id="drop-zone" class="drop-zone">
-                <p>Træk og slip en mappe og en Excel-fil her</p>
+                <p class="drop-text-default">
+                    Træk og slip en mappe og en Excel-fil her
+                </p>
+                <p class="drop-text-hover">Slip her</p>
             </div>
 
-            <button
-                id="generate-btn"
-                class="upload-button generate-btn"
-                disabled
-            >
-                Generer nyt excel ark
-            </button>
-            <p id="missing-text" class="missing-text">
-                * Billeder og Excel-fil mangler at blive lagt ind
-            </p>
+            <div id="generate-zone">
+                <button
+                    id="generate-btn"
+                    class="upload-button generate-btn"
+                    disabled
+                >
+                    Opret et nyt regneark
+                </button>
+                <p id="missing-text" class="missing-text">
+                    * Billeder og Excel-fil mangler at blive lagt ind
+                </p>
+            </div>
 
             <!--
             <div class="row">

@@ -55,21 +55,22 @@ body {
 
 .container {
     margin: 0 auto;
-    padding-top: 15vh;
+    padding-top: 10vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-width: 800px;
+    max-width: 100%;
 }
 
 #main-header {
     color: #111f38;
     font-size: 50px;
-    width: 80%;
-    max-width: 600px;
-    text-align: left; /* should put the text more towards the left but not enough */
-    margin-bottom: 75px;
+    width: 100%;
+    align-self: flex-start;
+    padding-left: 7%; /* should put the text more towards the left but not enough */
+    margin-bottom: 120px;
+    text-align: left;
 }
 
 .logo {
@@ -129,20 +130,20 @@ button {
     outline: none;
 }
 
-#greet-input {
-    margin-right: 5px;
-}
-
 .drop-zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 2px dashed #ffffff;
     border-radius: 12px;
     background-color: #aebfd1;
     color: #334155;
     padding: 40px 20px;
-    margin: 20px auto;
+    margin-top: 40px;
+    margin-bottom: 80px;
     width: 80%;
     max-width: 350px;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Creates a smooth, spring-like expansion */
     cursor: pointer;
 }
 
@@ -151,11 +152,25 @@ button {
     pointer-events: none;
 }
 
+.drop-text-hover {
+    display: none;
+    opacity: 0.6;
+    font-size: 1.2em;
+    letter-spacing: 0.5px;
+}
+
 .drop-zone.hover {
+    transform: scale(1.06); /* Satisfying pop on hover */
     border-color: #646cff;
     background-color: #e0e6ff;
-    max-width: 400px;
-    height: 200px;
+}
+
+.drop-zone.hover .drop-text-default {
+    display: none;
+}
+
+.drop-zone.hover .drop-text-hover {
+    display: block;
 }
 
 .status-row {
@@ -187,11 +202,25 @@ button {
 }
 
 .status-text.not-ready {
-    color: #e57373;
+    color: #d84b4b;
 }
 
 .status-text.ready {
     color: #4caf50;
+}
+
+#generate-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#generate-btn {
+    background-color: #afc0d560;
+    color: #50555c;
+    width: 250px;
+    height: 40px;
+    border-radius: 20px;
 }
 
 .generate-btn:disabled {
@@ -203,7 +232,7 @@ button {
 }
 
 .missing-text {
-    color: #e57373;
+    color: #d84b4b;
     font-size: 0.85em;
     margin-top: 12px;
 }
@@ -234,7 +263,6 @@ body.dark-theme a:hover {
 body.dark-theme input,
 body.dark-theme button {
     color: #ffffff;
-    background-color: #0f0f0f98;
 }
 
 body.dark-theme button:active {
@@ -250,4 +278,14 @@ body.dark-theme .drop-zone {
 body.dark-theme .drop-zone.hover {
     border-color: #24c8db;
     background-color: #1a2a3a;
+}
+
+body.dark-theme #moon-icon,
+body.dark-theme #sun-icon {
+    color: #dbcc50;
+    fill: #dbcc50;
+}
+
+body.dark-theme .status-text.not-ready {
+    color: #e57373;
 }

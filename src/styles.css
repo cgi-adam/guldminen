@@ -1,42 +1,75 @@
-.logo.vite:hover {
-    filter: drop-shadow(0 0 2em #747bff);
-}
-
 .logo.tauri:hover {
     filter: drop-shadow(0 0 2em #24c8db);
 }
 
-.logo.typescript:hover {
-    filter: drop-shadow(0 0 2em #2d79c7);
-}
 :root {
     font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
 
-    color: #0f0f0f;
-    background-color: #f6f6f6;
+    color: #111f38;
+    background: linear-gradient(135deg, #ffffff 0%, #d4e4f7 100%);
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh; /* this fixes the gradient so it covers the full DOM */
+}
+
+.top-nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px 40px;
+    gap: 15px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: #111f38;
+    font-size: 0.95em;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-color: transparent;
 }
 
 .container {
-    margin: 0;
-    padding-top: 10vh;
+    margin: 0 auto;
+    padding-top: 15vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    text-align: center;
+    align-items: center;
+    max-width: 800px;
 }
 
 #main-header {
     color: #111f38;
     font-size: 50px;
+    width: 80%;
+    max-width: 600px;
+    text-align: left; /* should put the text more towards the left but not enough */
+    margin-bottom: 75px;
 }
 
 .logo {
@@ -96,25 +129,21 @@ button {
     outline: none;
 }
 
-#generate-btn {
-}
-
 #greet-input {
     margin-right: 5px;
 }
 
 .drop-zone {
-    border: 2px dashed;
+    border: 2px dashed #ffffff;
     border-radius: 12px;
-    border-color: #ffffff;
-    background-color: #3c4249;
+    background-color: #aebfd1;
+    color: #334155;
     padding: 40px 20px;
     margin: 20px auto;
     width: 80%;
     max-width: 350px;
-    height: auto;
     transition: all 0.2s ease-in-out;
-    cursor: default;
+    cursor: pointer;
 }
 
 .drop-zone p {
@@ -122,28 +151,80 @@ button {
     pointer-events: none;
 }
 
-.drop-status {
-    font-size: 0.9em;
-    color: #646cff;
-    font-weight: 500;
-}
-
 .drop-zone.hover {
     border-color: #646cff;
     background-color: #e0e6ff;
-    transform: scale(1.02);
     max-width: 400px;
-    height: 100px;
+    height: 200px;
 }
 
-/* Manual Dark Theme Override */
+.status-row {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.status-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-badge {
+    background-color: #64748b;
+    color: white;
+    padding: 6px 24px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9em;
+}
+
+.status-text {
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.status-text.not-ready {
+    color: #e57373;
+}
+
+.status-text.ready {
+    color: #4caf50;
+}
+
+.generate-btn:disabled {
+    background-color: #d1d5db;
+    color: #9ca3af;
+    border-color: transparent;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.missing-text {
+    color: #e57373;
+    font-size: 0.85em;
+    margin-top: 12px;
+}
+
+body.dark-theme .generate-btn:disabled {
+    background-color: #374151;
+    color: #6b7280;
+}
+
 body.dark-theme {
     color: #f6f6f6;
-    background-color: #1f1f1f;
+    background: linear-gradient(135deg, #1f2329 0%, #17191c 100%);
 }
 
-body.dark-theme #main-header {
-    color: #c0d6ee;
+body.dark-theme #main-header,
+body.dark-theme .nav-btn {
+    color: #e2e8f0;
+}
+
+body.dark-theme .nav-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 body.dark-theme a:hover {
@@ -161,14 +242,12 @@ body.dark-theme button:active {
 }
 
 body.dark-theme .drop-zone {
-    border-color: #828997;
+    background-color: #94a3b8;
+    border-color: #475569;
+    color: #f8fafc;
 }
 
 body.dark-theme .drop-zone.hover {
     border-color: #24c8db;
     background-color: #1a2a3a;
-}
-
-body.dark-theme .drop-status {
-    color: #24c8db;
 }

@@ -3,11 +3,6 @@ use rust_xlsxwriter::Workbook;
 use std::fs;
 
 #[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
-
-#[tauri::command]
 fn generate_report(
     image_path: String,
     excel_path: String,
@@ -104,7 +99,7 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![greet, generate_report])
+        .invoke_handler(tauri::generate_handler![generate_report])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

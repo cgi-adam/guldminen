@@ -9,10 +9,49 @@ let selectedExcelPath = "";
 let selectedImageFolder = "";
 
 const dropZone = document.getElementById("drop-zone");
-const dropStatus = document.getElementById("drop-status");
 
 const themeToggle = document.getElementById("theme-toggle");
 const currentTheme = localStorage.getItem("theme");
+
+const statusImgText = document.getElementById("status-img-text");
+const statusExcelText = document.getElementById("status-excel-text");
+const generateBtn = document.getElementById(
+    "generate-btn",
+) as HTMLButtonElement | null;
+const missingText = document.getElementById("missing-text");
+
+function updateUI() {
+    if (selectedImageFolder) {
+        statusImgText!.textContent = "Klar";
+        statusImgText!.className = "status-text ready";
+    } else {
+        statusImgText!.textContent = "Ikke klar";
+        statusImgText!.className = "status-text not-ready";
+    }
+
+    if (selectedExcelPath) {
+        statusExcelText!.textContent = "Klar";
+        statusExcelText!.className = "status-text ready";
+    } else {
+        statusExcelText!.textContent = "Ikke klar";
+        statusExcelText!.className = "status-text not-ready";
+    }
+
+    if (selectedImageFolder && selectedExcelPath) {
+        generateBtn!.disabled = false;
+        missingText!.textContent = "";
+    } else if (!selectedImageFolder && !selectedExcelPath) {
+        generateBtn!.disabled = true;
+        missingText!.textContent =
+            "* Billeder og Excel-fil mangler at blive lagt ind";
+    } else if (!selectedImageFolder) {
+        generateBtn!.disabled = true;
+        missingText!.textContent = "* Billedmappe mangler at blive lagt ind";
+    } else {
+        generateBtn!.disabled = true;
+        missingText!.textContent = "* Excel-fil mangler at blive lagt ind";
+    }
+}
 
 if (currentTheme === "dark") {
     document.body.classList.add("dark-theme");
@@ -44,8 +83,29 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+document.getElementById("drop-zone")?.addEventListener("click", async () => {
+    const excelPath = await open({
+        multiple: false,
+        filters: [{ name: "Excel", extensions: ["xlsx", "xls"] }],
+        title: "Vælg din master Excel-fil",
+    });
+    if (excelPath) {
+        selectedExcelPath = excelPath as string;
+
+        const folderPath = await open({
+            directory: true,
+            multiple: false,
+            title: "Vælg mappen med billeder",
+        });
+        if (folderPath) {
+            selectedImageFolder = folderPath as string;
+        }
+    }
+    updateUI();
+});
+
 getCurrentWindow().onDragDropEvent((event) => {
-    if (!dropZone || !dropStatus) return;
+    if (!dropZone) return;
 
     if (event.payload.type === "over" || event.payload.type === "enter") {
         dropZone.classList.add("hover");
@@ -54,9 +114,7 @@ getCurrentWindow().onDragDropEvent((event) => {
     } else if (event.payload.type === "drop") {
         dropZone.classList.remove("hover");
 
-        // Loop through all dropped items
         for (const path of event.payload.paths) {
-            // Check if it's an Excel file based on extension
             if (
                 path.toLowerCase().endsWith(".xlsx") ||
                 path.toLowerCase().endsWith(".xls")
@@ -64,18 +122,12 @@ getCurrentWindow().onDragDropEvent((event) => {
                 selectedExcelPath = path;
                 console.log("Excel dropped:", path);
             } else {
-                // If it's not Excel, we assume it's the image folder
                 selectedImageFolder = path;
                 console.log("Folder dropped:", path);
             }
         }
 
-        // Update UI Text
-        let status = [];
-        if (selectedExcelPath) status.push("Excel indlæst");
-        if (selectedImageFolder) status.push("Mappe indlæst");
-        dropStatus.textContent =
-            status.length > 0 ? status.join(" | ") : "Klar...";
+        updateUI();
     }
 });
 
@@ -112,16 +164,13 @@ document.getElementById("generate-btn")?.addEventListener("click", async () => {
     }
 
     try {
-        // Here we open the native save dialog
         const savePath = await save({
             filters: [{ name: "Excel", extensions: ["xlsx"] }],
             defaultPath: "angiv navn.xlsx",
         });
 
-        // If the user closes the dialog without saving, stop execution
         if (!savePath) return;
 
-        // Send all three paths to the Rust backend
         const response = await invoke("generate_report", {
             imagePath: selectedImageFolder,
             excelPath: selectedExcelPath,

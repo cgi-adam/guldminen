@@ -146,17 +146,26 @@ button {
     width: 100%;
     align-self: flex-start;
     padding-left: 7%;
-    margin-bottom: 90px;
+    margin-bottom: 115px;
     text-align: left;
 }
 
 /* ----------------------
     4. Generate Zone
 ---------------------- */
+.app-core {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+}
+
 #generate-zone {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
     margin-bottom: 50px;
 }
 
@@ -180,23 +189,9 @@ button {
     opacity: 0.5;
 }
 
-.missing-text {
-    color: var(--status-not-ready);
-    font-size: 0.85em;
-    margin-top: 12px;
-}
-
 /* ----------------------
     5. Dropzone & File List
 ---------------------- */
-.app-core {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 500px;
-}
-
 .drop-zone {
     position: relative;
     display: flex;
@@ -207,7 +202,7 @@ button {
     background-color: var(--dropzone-bg);
     color: var(--dropzone-text);
     padding: 40px 20px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     width: 80%;
     max-width: 360px;
     height: 125px;
@@ -246,6 +241,7 @@ button {
 .drop-zone.hover .drop-text-hover {
     display: block;
     opacity: 0.7;
+    color: var(--text-main);
 }
 
 .file-list {
@@ -253,7 +249,7 @@ button {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-bottom: 40px;
+    margin-bottom: 35px;
 }
 
 .file-card {
@@ -265,9 +261,28 @@ button {
     padding: 6px 16px 6px 6px;
     border-radius: 50px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    border: 1px solid transparent;
 }
 
-.file-card.hidden {
+/* Empty Ghost Card State */
+.file-card.empty {
+    background: transparent;
+    border: 1px dashed var(--dropzone-border);
+    box-shadow: none;
+}
+
+.file-card.empty .status-badge {
+    background-color: var(--btn-disabled-bg);
+    color: var(--text-muted);
+}
+
+.file-card.empty .file-path {
+    font-style: italic;
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.file-actions.hidden {
     display: none;
 }
 
@@ -310,8 +325,10 @@ button {
     padding: 6px;
     font-size: 1.1em;
     cursor: pointer;
-    transition: background 0.2s;
-    color: var(--text-main);
+    transition:
+        background 0.2s,
+        color 0.2s;
+    color: var(--text-muted);
 }
 
 .icon-btn svg {
@@ -319,9 +336,9 @@ button {
     height: 16px;
     fill: currentColor;
 }
-
 .icon-btn:hover {
     background: var(--icon-hover-bg);
+    color: var(--text-main);
 }
 .delete-btn:hover {
     color: var(--status-not-ready);
@@ -369,13 +386,11 @@ button {
     align-items: center;
     margin-bottom: 16px;
 }
-
 .modal-header h2 {
     margin: 0;
     font-size: 1.2em;
     color: var(--text-main);
 }
-
 .modal-list {
     list-style: none;
     padding: 0;
@@ -384,12 +399,10 @@ button {
     font-size: 0.9em;
     color: var(--text-muted);
 }
-
 .modal-list li {
     padding: 8px 0;
     border-bottom: 1px solid var(--card-border);
 }
-
 .modal-list li:last-child {
     border-bottom: none;
 }

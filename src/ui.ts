@@ -7,14 +7,16 @@ export class UIHandler {
     private generateBtn = document.getElementById(
         "generate-btn",
     ) as HTMLButtonElement;
-    private missingText = document.getElementById(
-        "missing-text",
-    ) as HTMLElement;
 
     private cardImg = document.getElementById("card-img") as HTMLElement;
     private pathImg = document.getElementById("path-img") as HTMLElement;
+    private actionsImg = document.getElementById("actions-img") as HTMLElement;
+
     private cardExcel = document.getElementById("card-excel") as HTMLElement;
     private pathExcel = document.getElementById("path-excel") as HTMLElement;
+    private actionsExcel = document.getElementById(
+        "actions-excel",
+    ) as HTMLElement;
 
     private modal = document.getElementById("inspect-modal") as HTMLElement;
     private modalTitle = document.getElementById("modal-title") as HTMLElement;
@@ -29,6 +31,7 @@ export class UIHandler {
         this.setupDropZone();
         this.setupTauriDragAndDrop();
         this.setupFileActions();
+        this.updateUI();
     }
 
     private setupFileActions() {
@@ -62,7 +65,7 @@ export class UIHandler {
                         }
                     } catch (err) {
                         this.modalList.innerHTML =
-                            "<li>Kunne ikke læse mappen. Mangler tauri-plugin-fs?</li>";
+                            "<li>Kunne ikke læse mappen. Tjek at tauri-plugin-fs er installeret.</li>";
                     }
                 }
             });
@@ -84,9 +87,7 @@ export class UIHandler {
             });
 
         this.modal.addEventListener("click", (e) => {
-            if (e.target === this.modal) {
-                this.modal.classList.add("hidden");
-            }
+            if (e.target === this.modal) this.modal.classList.add("hidden");
         });
 
         document
@@ -130,7 +131,6 @@ export class UIHandler {
                     });
                     if (folderPath) this.imagePath = folderPath as string;
                 }
-
                 if (!this.excelPath) {
                     const filePath = await open({
                         filters: [
@@ -141,7 +141,6 @@ export class UIHandler {
                     });
                     if (filePath) this.excelPath = filePath as string;
                 }
-
                 this.updateUI();
             } catch (error) {
                 console.error("Fejl ved valg af filer:", error);
@@ -179,24 +178,28 @@ export class UIHandler {
     private updateUI() {
         if (this.imagePath) {
             this.pathImg.textContent = this.getFolderName(this.imagePath);
-            this.cardImg.classList.remove("hidden");
+            this.cardImg.classList.remove("empty");
+            this.actionsImg.classList.remove("hidden");
         } else {
-            this.cardImg.classList.add("hidden");
+            this.pathImg.textContent = "Venter på mappe...";
+            this.cardImg.classList.add("empty");
+            this.actionsImg.classList.add("hidden");
         }
 
         if (this.excelPath) {
             this.pathExcel.textContent = this.getFolderName(this.excelPath);
-            this.cardExcel.classList.remove("hidden");
+            this.cardExcel.classList.remove("empty");
+            this.actionsExcel.classList.remove("hidden");
         } else {
-            this.cardExcel.classList.add("hidden");
+            this.pathExcel.textContent = "Venter på fil...";
+            this.cardExcel.classList.add("empty");
+            this.actionsExcel.classList.add("hidden");
         }
 
         if (this.imagePath && this.excelPath) {
             this.generateBtn.disabled = false;
-            this.missingText.style.display = "none";
         } else {
             this.generateBtn.disabled = true;
-            this.missingText.style.display = "block";
         }
     }
 }

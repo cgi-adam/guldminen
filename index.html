@@ -68,19 +68,6 @@
         <main class="container">
             <h1 id="main-header">God eftermiddag,</h1>
 
-            <p id="missing-text" class="missing-text">
-                * Billeder og Excel-fil mangler at blive lagt ind
-            </p>
-            <div id="generate-zone">
-                <button
-                    id="generate-btn"
-                    class="upload-button generate-btn"
-                    disabled
-                >
-                    Opret et nyt regneark
-                </button>
-            </div>
-
             <div class="app-core">
                 <div id="drop-zone" class="drop-zone">
                     <p class="drop-text-default">
@@ -91,12 +78,14 @@
                 </div>
 
                 <div id="file-list" class="file-list">
-                    <div id="card-img" class="file-card hidden">
+                    <div id="card-img" class="file-card empty">
                         <div class="file-info">
                             <span class="status-badge">Billeder</span>
-                            <span id="path-img" class="file-path"></span>
+                            <span id="path-img" class="file-path"
+                                >Venter på mappe...</span
+                            >
                         </div>
-                        <div class="file-actions">
+                        <div id="actions-img" class="file-actions hidden">
                             <button
                                 id="btn-inspect-img"
                                 class="icon-btn"
@@ -128,12 +117,15 @@
                         </div>
                     </div>
 
-                    <div id="card-excel" class="file-card hidden">
+                    <!-- Excel Card -->
+                    <div id="card-excel" class="file-card empty">
                         <div class="file-info">
                             <span class="status-badge">Excel-fil</span>
-                            <span id="path-excel" class="file-path"></span>
+                            <span id="path-excel" class="file-path"
+                                >Venter på fil...</span
+                            >
                         </div>
-                        <div class="file-actions">
+                        <div id="actions-excel" class="file-actions hidden">
                             <button
                                 id="btn-inspect-excel"
                                 class="icon-btn"
@@ -164,6 +156,16 @@
                             </button>
                         </div>
                     </div>
+                </div>
+
+                <div id="generate-zone">
+                    <button
+                        id="generate-btn"
+                        class="upload-button generate-btn"
+                        disabled
+                    >
+                        Opret et nyt regneark
+                    </button>
                 </div>
             </div>
         </main>

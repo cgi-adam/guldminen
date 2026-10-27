@@ -46,10 +46,10 @@ if (langSelect) {
 
 applyTranslations(currentLang);
 
-let ui: UIHandler;
 document.addEventListener("DOMContentLoaded", () => {
     initThemeToggle();
-    ui = new UIHandler();
+    const ui = new UIHandler();
+
     const generateBtn = document.getElementById("generate-btn");
     generateBtn?.addEventListener("click", async () => {
         if (!ui.imagePath || !ui.excelPath) return;

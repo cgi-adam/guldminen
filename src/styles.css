@@ -93,6 +93,7 @@ button {
     align-items: center;
     max-width: 100%;
 }
+
 .top-nav {
     display: flex;
     justify-content: flex-end;
@@ -100,7 +101,7 @@ button {
     padding: 20px 40px;
     gap: 15px;
     position: absolute;
-    top: 0;
+    top: 25px;
     right: 0;
     width: 100%;
     box-sizing: border-box;
@@ -140,7 +141,7 @@ button {
     width: 100%;
     align-self: flex-start;
     padding-left: 7%;
-    margin-bottom: 105px;
+    margin-bottom: 115px;
     text-align: left;
 }
 /* ----------------------
@@ -380,4 +381,45 @@ button {
 }
 .modal-list li:last-child {
     border-bottom: none;
+}
+/* ----------------------
+    9. Custom Titlebar
+---------------------- */
+.titlebar {
+    height: 32px;
+    user-select: none;
+    display: flex;
+    justify-content: flex-end;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+}
+
+.titlebar-controls {
+    display: flex;
+}
+
+.titlebar-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.titlebar-btn:hover {
+    background: var(--nav-hover);
+}
+
+#titlebar-close:hover {
+    background: #e81123;
+    color: white;
 }

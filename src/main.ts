@@ -2,6 +2,23 @@ import { initThemeToggle } from "./theme";
 import { setDynamicGreeting, UIHandler } from "./ui";
 import { generateReport } from "./api";
 import { save } from "@tauri-apps/plugin-dialog";
+import { getCurrentWindow } from "@tauri-apps/api/window";
+
+const appWindow = getCurrentWindow();
+
+document.getElementById("titlebar-minimize")?.addEventListener("click", () => {
+    appWindow.minimize();
+});
+
+document.getElementById("titlebar-close")?.addEventListener("click", () => {
+    appWindow.close();
+});
+
+document.querySelector(".titlebar")?.addEventListener("mousedown", (e) => {
+    if ((e.target as HTMLElement).closest(".titlebar-controls")) return;
+
+    appWindow.startDragging();
+});
 
 window.addEventListener("DOMContentLoaded", setDynamicGreeting);
 

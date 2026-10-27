@@ -190,6 +190,10 @@ export class UIHandler {
     }
 
     private async setupTauriDragAndDrop() {
+        await listen("tauri://drag-enter", () => {
+            this.dropZone.classList.add("hover");
+        });
+
         await listen<{ paths: string[] }>("tauri://drag-drop", (event) => {
             this.dropZone.classList.remove("hover");
             const paths = event.payload.paths;

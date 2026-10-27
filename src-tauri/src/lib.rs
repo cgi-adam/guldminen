@@ -7,9 +7,13 @@ fn generate_report(
     image_path: String,
     excel_path: String,
     save_path: String,
+    header_present: String,
+    header_missing: String,
+    error_msg: String,
+    success_msg: String,
 ) -> Result<String, String> {
     if image_path.is_empty() || excel_path.is_empty() {
-        return Err("Venligst vælg både en mappe og en Excel fil".into());
+        return Err(error_msg);
     }
 
     // First, we read the image filenames
@@ -31,7 +35,7 @@ fn generate_report(
         }
     }
 
-    // Thenn, we read the master excel list by using open_workbook_auto
+    // Then, we read the master excel list by using open_workbook_auto
     let mut excel = open_workbook_auto(&excel_path).map_err(|e| e.to_string())?;
 
     let sheet_names = excel.sheet_names().to_owned();
@@ -69,11 +73,12 @@ fn generate_report(
     let mut workbook = Workbook::new();
     let worksheet = workbook.add_worksheet();
 
+    // Use the dynamic translated headers from TypeScript
     worksheet
-        .write_string(0, 0, "Fotograferet")
+        .write_string(0, 0, &header_present)
         .map_err(|e| e.to_string())?;
     worksheet
-        .write_string(0, 1, "Mangler")
+        .write_string(0, 1, &header_missing)
         .map_err(|e| e.to_string())?;
 
     for (row, name) in present.iter().enumerate() {
@@ -88,10 +93,10 @@ fn generate_report(
             .map_err(|e| e.to_string())?;
     }
 
-    // Lastly, we save the file
+    // Lastly, we actually save the file (This was commented out!)
     workbook.save(&save_path).map_err(|e| e.to_string())?;
 
-    Ok(format!("Succes! Filen er gemt her:\n{}", save_path))
+    Ok(format!("{}{}", success_msg, save_path))
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]

@@ -1,23 +1,46 @@
 import { open } from "@tauri-apps/plugin-dialog";
 import { listen } from "@tauri-apps/api/event";
 import { readDir } from "@tauri-apps/plugin-fs";
+import { translations, currentLang, setLanguage } from "./i18n";
 
-export function setDynamicGreeting(): void {
+export function applyTranslations() {
+    document.querySelectorAll<HTMLElement>("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (key && translations[currentLang][key]) {
+            el.innerHTML = translations[currentLang][key];
+        }
+    });
+
+    setDynamicGreeting();
+}
+
+function setDynamicGreeting() {
     const header = document.getElementById("main-header");
     if (!header) return;
 
     const currentHour = new Date().getHours();
-    let greeting = "Godaften";
+    let greetingKey = "greeting.evening";
 
     if (currentHour >= 5 && currentHour < 9) {
-        greeting = "Godmorgen";
+        greetingKey = "greeting.morning";
     } else if (currentHour >= 9 && currentHour < 18) {
-        greeting = "Goddag";
-    } else {
-        greeting = "Godaften";
+        greetingKey = "greeting.day";
     }
 
-    header.textContent = `${greeting}.`;
+    header.textContent = translations[currentLang][greetingKey];
+}
+
+export function initUI() {
+    const langToggle = document.getElementById("lang-toggle");
+    if (langToggle) {
+        langToggle.addEventListener("click", () => {
+            const newLang = currentLang === "da" ? "en" : "da";
+            setLanguage(newLang);
+            applyTranslations();
+        });
+    }
+
+    applyTranslations();
 }
 
 export class UIHandler {

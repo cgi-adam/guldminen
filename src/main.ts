@@ -1,7 +1,9 @@
 import { initThemeToggle } from "./theme";
-import { UIHandler } from "./ui";
+import { setDynamicGreeting, UIHandler } from "./ui";
 import { generateReport } from "./api";
 import { save } from "@tauri-apps/plugin-dialog";
+
+window.addEventListener("DOMContentLoaded", setDynamicGreeting);
 
 document.addEventListener("DOMContentLoaded", () => {
     initThemeToggle();

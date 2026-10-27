@@ -2,27 +2,22 @@ import { open } from "@tauri-apps/plugin-dialog";
 import { listen } from "@tauri-apps/api/event";
 import { readDir } from "@tauri-apps/plugin-fs";
 
-export let selectedExcelPath = "";
-export let selectedImageFolder = "";
-
-export function initUI(): void {
-    setGreeting();
-}
-
-export function setGreeting(): void {
-    const hour = new Date().getHours();
+export function setDynamicGreeting(): void {
     const header = document.getElementById("main-header");
     if (!header) return;
 
-    if (hour >= 5 && hour < 10) {
-        header.textContent = "Godmorgen.";
-    } else if (hour >= 10 && hour < 13) {
-        header.textContent = "God formiddag.";
-    } else if (hour >= 13 && hour < 18) {
-        header.textContent = "God eftermiddag.";
+    const currentHour = new Date().getHours();
+    let greeting = "Godaften";
+
+    if (currentHour >= 5 && currentHour < 9) {
+        greeting = "Godmorgen";
+    } else if (currentHour >= 9 && currentHour < 18) {
+        greeting = "Goddag";
     } else {
-        header.textContent = "Godaften.";
+        greeting = "Godaften";
     }
+
+    header.textContent = `${greeting}.`;
 }
 
 export class UIHandler {

@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const savePath = await save({
                 filters: [{ name: "Excel", extensions: ["xlsx"] }],
-                defaultPath: "Mangler-Rapport.xlsx",
+                defaultPath: "Angiv-filnavn.xlsx",
             });
 
             if (savePath) {

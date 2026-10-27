@@ -26,7 +26,6 @@
     --icon-hover-bg: #f1f5f9;
     --modal-overlay: rgba(17, 31, 56, 0.5);
 }
-
 body.dark-theme {
     --bg-gradient: linear-gradient(135deg, #1f2329 0%, #17191c 100%);
     --text-main: #f6f6f6;
@@ -51,7 +50,6 @@ body.dark-theme {
     --icon-hover-bg: #334155;
     --modal-overlay: rgba(0, 0, 0, 0.7);
 }
-
 /* ----------------------
     2. Global Styles
 ---------------------- */
@@ -65,7 +63,6 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
 body {
     margin: 0;
     min-height: 100vh;
@@ -76,7 +73,6 @@ body {
         background 0.3s ease,
         color 0.3s ease;
 }
-
 button {
     font-size: 1em;
     font-weight: 500;
@@ -85,7 +81,6 @@ button {
     outline: none;
     color: var(--text-main);
 }
-
 /* ----------------------
     3. Layout and Containers
 ---------------------- */
@@ -98,7 +93,6 @@ button {
     align-items: center;
     max-width: 100%;
 }
-
 .top-nav {
     display: flex;
     justify-content: flex-end;
@@ -111,7 +105,6 @@ button {
     width: 100%;
     box-sizing: border-box;
 }
-
 .nav-btn {
     display: flex;
     align-items: center;
@@ -126,11 +119,9 @@ button {
     border-radius: 4px;
     transition: background-color 0.2s;
 }
-
 .nav-btn:hover {
     background-color: var(--nav-hover);
 }
-
 #moon-icon,
 #sun-icon {
     color: var(--icon-color);
@@ -140,18 +131,20 @@ button {
         fill 0.3s ease;
 }
 
+/* ----------------------
+    4. Main Header
+---------------------- */
 #main-header {
     color: var(--text-main);
     font-size: 50px;
     width: 100%;
     align-self: flex-start;
     padding-left: 7%;
-    margin-bottom: 115px;
+    margin-bottom: 105px;
     text-align: left;
 }
-
 /* ----------------------
-    4. Generate Zone
+    5. Generate Zone
 ---------------------- */
 .app-core {
     display: flex;
@@ -160,7 +153,6 @@ button {
     width: 100%;
     max-width: 500px;
 }
-
 #generate-zone {
     display: flex;
     flex-direction: column;
@@ -168,7 +160,6 @@ button {
     width: 100%;
     margin-bottom: 50px;
 }
-
 #generate-btn {
     background-color: var(--btn-bg);
     color: var(--text-main);
@@ -181,16 +172,14 @@ button {
         background-color 0.2s,
         color 0.2s;
 }
-
 .generate-btn:disabled {
     background-color: var(--btn-disabled-bg);
     color: var(--btn-disabled-text);
     cursor: default !important;
     opacity: 0.5;
 }
-
 /* ----------------------
-    5. Dropzone & File List
+    6. Dropzone & File List
 ---------------------- */
 .drop-zone {
     position: relative;
@@ -202,7 +191,7 @@ button {
     background-color: var(--dropzone-bg);
     color: var(--dropzone-text);
     padding: 40px 20px;
-    margin-bottom: 40px;
+    margin-bottom: 70px;
     width: 80%;
     max-width: 360px;
     height: 125px;
@@ -210,7 +199,6 @@ button {
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
 }
-
 .drop-zone p {
     margin: 5px 0;
     font-size: 18px;
@@ -219,7 +207,6 @@ button {
     pointer-events: none;
     transition: opacity 0.3s ease;
 }
-
 .drop-text-default {
     opacity: 1;
 }
@@ -228,13 +215,13 @@ button {
     opacity: 0.6;
     font-size: 1.2em;
 }
-
 .drop-zone.hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
+    max-width: 400px;
+    height: 165px;
     border-color: var(--dropzone-hover-border);
     background-color: var(--dropzone-hover-bg);
 }
-
 .drop-zone.hover .drop-text-default {
     display: none;
 }
@@ -243,15 +230,16 @@ button {
     opacity: 0.7;
     color: var(--text-main);
 }
-
+/* ----------------------
+    7. File list zone
+---------------------- */
 .file-list {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 }
-
 .file-card {
     display: flex;
     justify-content: space-between;
@@ -263,36 +251,30 @@ button {
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
     border: 1px solid transparent;
 }
-
 /* Empty Ghost Card State */
 .file-card.empty {
     background: transparent;
     border: 1px dashed var(--dropzone-border);
     box-shadow: none;
 }
-
 .file-card.empty .status-badge {
     background-color: var(--btn-disabled-bg);
     color: var(--text-muted);
 }
-
 .file-card.empty .file-path {
     font-style: italic;
     color: var(--text-muted);
     opacity: 0.7;
 }
-
 .file-actions.hidden {
     display: none;
 }
-
 .file-info {
     display: flex;
     align-items: center;
     gap: 12px;
     overflow: hidden;
 }
-
 .file-path {
     font-size: 0.85em;
     white-space: nowrap;
@@ -301,23 +283,20 @@ button {
     max-width: 200px;
     opacity: 0.8;
 }
-
 .file-actions {
     display: flex;
     gap: 8px;
 }
-
 .status-badge {
     display: flex;
     justify-content: center;
     background-color: var(--status-badge-bg);
     color: white;
-    padding: 4px 16px;
+    padding: 2px 13px;
     border-radius: 50px;
     font-weight: 500;
     font-size: 0.8em;
 }
-
 .icon-btn {
     background: transparent;
     border: none;
@@ -330,7 +309,6 @@ button {
         color 0.2s;
     color: var(--text-muted);
 }
-
 .icon-btn svg {
     width: 16px;
     height: 16px;
@@ -345,7 +323,7 @@ button {
 }
 
 /* ----------------------
-    6. Modal Styles
+    8. Modal Styles
 ---------------------- */
 .modal-overlay {
     position: fixed;
@@ -361,12 +339,10 @@ button {
     z-index: 1000;
     transition: opacity 0.2s;
 }
-
 .modal-overlay.hidden {
     display: none;
     opacity: 0;
 }
-
 .modal-content {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -379,7 +355,6 @@ button {
     flex-direction: column;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
-
 .modal-header {
     display: flex;
     justify-content: space-between;

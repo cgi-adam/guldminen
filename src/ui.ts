@@ -2,6 +2,29 @@ import { open } from "@tauri-apps/plugin-dialog";
 import { listen } from "@tauri-apps/api/event";
 import { readDir } from "@tauri-apps/plugin-fs";
 
+export let selectedExcelPath = "";
+export let selectedImageFolder = "";
+
+export function initUI(): void {
+    setGreeting();
+}
+
+export function setGreeting(): void {
+    const hour = new Date().getHours();
+    const header = document.getElementById("main-header");
+    if (!header) return;
+
+    if (hour >= 5 && hour < 10) {
+        header.textContent = "Godmorgen.";
+    } else if (hour >= 10 && hour < 13) {
+        header.textContent = "God formiddag.";
+    } else if (hour >= 13 && hour < 18) {
+        header.textContent = "God eftermiddag.";
+    } else {
+        header.textContent = "Godaften.";
+    }
+}
+
 export class UIHandler {
     private dropZone = document.getElementById("drop-zone") as HTMLElement;
     private generateBtn = document.getElementById(
